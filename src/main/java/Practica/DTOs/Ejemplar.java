@@ -1,24 +1,19 @@
 package Practica.DTOs;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 public class Ejemplar {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "isbn", nullable = false)
-    private Practica.DTOs.Libro isbn;
+    private Libro libro;
 
-    @ColumnDefault("'Disponible'")
-    @Lob
-    @Column(name = "estado")
+    @Column(name = "estado", nullable = false)
     private String estado;
 
     public Integer getId() {
@@ -29,12 +24,12 @@ public class Ejemplar {
         this.id = id;
     }
 
-    public Practica.DTOs.Libro getIsbn() {
-        return isbn;
+    public Libro getLibro() {
+        return libro;
     }
 
-    public void setIsbn(Practica.DTOs.Libro isbn) {
-        this.isbn = isbn;
+    public void setLibro(Libro libro) {
+        this.libro = libro;
     }
 
     public String getEstado() {
@@ -45,4 +40,12 @@ public class Ejemplar {
         this.estado = estado;
     }
 
+    @Override
+    public String toString() {
+        return "Ejemplar{" +
+                "id=" + id +
+                ", libro=" + (libro != null ? libro.getTitulo() : "Desconocido") +
+                ", estado='" + estado + '\'' +
+                '}';
+    }
 }
