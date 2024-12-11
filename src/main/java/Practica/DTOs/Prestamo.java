@@ -1,4 +1,4 @@
-package DTOs;
+package Practica.DTOs;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.OnDelete;
@@ -9,16 +9,15 @@ import java.time.LocalDate;
 @Entity
 public class Prestamo {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generación automática
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "usuario_id", nullable = false)
-    private DTOs.Usuario usuario;
+    private Usuario usuario;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "ejemplar_id", nullable = false)
     private Ejemplar ejemplar;
 
@@ -36,11 +35,11 @@ public class Prestamo {
         this.id = id;
     }
 
-    public DTOs.Usuario getUsuario() {
+    public Usuario getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(DTOs.Usuario usuario) {
+    public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
 
@@ -68,4 +67,14 @@ public class Prestamo {
         this.fechaDevolucion = fechaDevolucion;
     }
 
+    @Override
+    public String toString() {
+        return "Préstamo{" +
+                "ID=" + id +
+                ", Usuario='" + (usuario != null ? usuario.getNombre() : "Desconocido") + '\'' +
+                ", Ejemplar ID=" + (ejemplar != null ? ejemplar.getId() : "Desconocido") +
+                ", Fecha Inicio=" + fechaInicio +
+                ", Fecha Devolución=" + (fechaDevolucion != null ? fechaDevolucion : "Pendiente") +
+                '}';
+    }
 }

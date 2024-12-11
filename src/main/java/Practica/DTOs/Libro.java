@@ -1,4 +1,4 @@
-package DTOs;
+package Practica.DTOs;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,5 +39,12 @@ public class Libro {
     public void setAutor(String autor) {
         this.autor = autor;
     }
-
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "isbn='" + isbn + '\'' +
+                ", titulo='" + titulo + '\'' +
+                ", autor='" + autor + '\'' +
+                '}';
+    }
 }
